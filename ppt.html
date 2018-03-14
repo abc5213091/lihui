@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>正则表达式</h1>
+					<h3>The JavaScript Regular Expression</h3>
+					<!-- <p>
+						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> and <a href="https://github.com/hakimel/reveal.js/graphs/contributors">contributors</a></small>
+					</p> -->
+					
+				</section>
+
+				<section id="fragments">
+					<h2>正则的用途</h2>
+					<p class="fragment">1. 验证类问题</p>
+					<p class="fragment">2. 搜索、提取、替换类问题</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>正则的写法</h2>
+						<p class="fragment">1. 字面量的方式</p>
+						<p class="fragment">2. 构造函数创建</p>
+					</section>
+					
+					<section>
+						<pre><code>
+//字面量创建一个正则表达式
+var exp = /pattern/flags;
+
+//构造函数创建一个正则表达式
+var exp = new RegExp("pattern","flags");
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>正则使用函数</h3>
+						<p>
+							字符串函数: search ,split ,match ,replace
+						</p>
+						<p>
+							正则实例函数: test ,exec
+						</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>手机验证表达式</h3>
+						<pre><code class="hljs">var reg = /^1[3456789][0-9]{9}$/</code></pre>
+					</section>
+					<section>
+						<h2>正则解读 </h2>
+						<h3>/^1[356789][0-9]{9}$/</h3>
+						<pre><code>
+^ 匹配开头，在多行匹配中匹配行开头。
+
+$ 匹配结尾，在多行匹配中匹配行结尾。
+
+[356789] 方括号，在里面字符任选一个匹配。
+
+[0-9]{9}:
+[0-9] 用“-”连接符时，以ASCII码表为基础，此范围内任选一个匹配，也可以简写成 \d；
+{9} 量词，表示出现的次数, 注：量词必须依赖字符组的出现， 所以[0-9]{9}是一个整体
+						</code></pre>
+						<p>以 13100001133 为例</p>
+						
+					</section>
+					
+				</section>
+
+				<section>
+					<section>
+						<h2>正则的匹配模式</h2>
+						<p class="fragment">1. 匹配字符</p>
+						<p class="fragment">2. 匹配位置</p>
+					</section>
+				
+					<section>
+						<img src="https://upload-images.jianshu.io/upload_images/2463524-8ddaddee044d96fd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="">
+						<p>正则表达式是匹配模式，要么匹配字符，要么匹配位置。</p>
+					</section>
+					
+				</section>
+
+				<section>
+					<section>
+						<h2>字符组</h2>
+						<p>
+							 需要强调的是，虽叫字符组（字符类），但只是其中一个字符。例如[abc]，表示匹配一个字符，它可以是“a”、“b”、“c”之一。
+
+						</p>
+						<p>
+							 排除字符组（反义字符组）的概念。例如[^abc]，表示是一个除"a"、"b"、"c"之外的任意一个字符。字符组的第一位放^（脱字符），表示求反的概念。
+						</p>
+					</section>
+
+					<section>
+						<h3>常见的简写形式</h3>
+						<pre><code>
+\d就是[0-9]。表示是一位数字。记忆方式：其英文是digit（数字）。
+
+\D就是[^0-9]。表示除数字外的任意字符。
+
+\w就是[0-9a-zA-Z_]。表示数字、大小写字母和下划线。记忆方式：w是word的简写，也称单词字符。
+
+\W是[^0-9a-zA-Z_]。非单词字符。
+
+\s是[\t\v\n\r\f]。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页符。记忆方式：s是space character的首字母。\S是[^ \t\v\n\r\f]。 非空白符。
+
+.就是[^\n\r\u2028\u2029]。通配符，表示几乎任意字符。换行符、回车符、行分隔符和段分隔符除外。
+
+
+匹配所有字符写法：[\d\D]、[\w\W]、[\s\S]和[^]中任何的一个
+
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>量词</h3>
+						<pre><code>
+{m,} 表示至少出现m次。
+
+{m} 等价于{m,m}，表示出现m次。
+
+? 等价于{0,1}，表示出现或者不出现。记忆方式：问号的意思表示，有吗？
+
++ 等价于{1,}，表示出现至少一次。
+
+* 等价于{0,}，表示出现任意次，有可能不出现。
+
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>贪婪匹配</h3>
+						<pre><code>
+var regex = /\d{2,5}/g;
+var string = "123 1234 12345 123456"; 
+
+console.log( string.match(regex) ); 
+// => ["123", "1234", "12345","12345"] 
+					
+						</code></pre>
+						<p>
+							这种就是贪婪匹配，它会尽可能多的进行匹配
+						</p>
+					</section>
+
+					<section>
+						<h3>惰性匹配</h3>
+						<p>通过在量词后面加个问号就能实现惰性匹配</p>
+						<pre><code>
+{m,n}? 
+{m,}? 
+?? 
++? 
+*?
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>多选分支</h3>
+						<p>
+							 例如要匹配"good"和"nice"可以使用/good|nice/。
+						</p>
+						<pre><code>
+var regex = /good|nice/g; 
+var string = "good idea, nice try."; 
+console.log( string.match(regex) ); // => ["good", "nice"]
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>
+							修饰符
+						</h3>
+
+						<pre><code>
+加g修饰符：表示全局匹配，模式将被应用到所有字符串，而不是在发现第一个匹配项时停止 
+
+加i修饰符：表示不区分大小写 
+
+加m修饰符：表示多行模式，会改变^和$的行为
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>位置匹配</h2>
+						<p>
+							 匹配某个位置的表达式都是零宽的，这是主要包含两部分，一是定位符，匹配一个特定位置，二是零宽断言，匹配一个要满足某要求的位置。
+						</p>
+					</section>
+
+					<section>
+						<h3>常用定位符</h3>
+						<pre><code>
+\b匹配单词边界位置，准确的描述是它匹配一个位置，这个位置前后不全是\w能描述的字符，所以像\u597d\babc是可以匹配“好abc”的。
+
+\B就是\b的反面的意思，非单词边界。例如在字符串中所有位置中，扣掉\b，剩下的都是\B的。
+
+^匹配字符串开始位置，也就是位置0，如果设置了 RegExp 对象的 Multiline 属性，^
+也匹配 '\n' 或 '\r' 之后的位置 
+
+$匹配字符串结束位置，如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 '\n' 或 '\r' 之前的位置 
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>环视或零宽断言 (ES5)</h3>
+						<pre><code>
+(?=exp)匹配一个位置，这个位置的右边能匹配表达式exp，注意这个表达式仅仅匹配一个位置，只是它对于这个位置的右边有要求，而右边的东西是不会被放进结果的，比如用read(?=ing)去匹配“reading”，结果是“read”，而“ing”是不会放进结果的
+
+(?!exp)匹配一个位置，这个位置的右边不能匹配表达式exp 
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>举个栗子</h3>
+						<p class="fragment">1.实现金额每隔3位以逗号分开</p>
+						<pre class="fragment"><code>
+"123456789".replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+						</code></pre>
+						<p class="fragment">2.银行卡每四位以空格分开</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2> 正则表达式括号的作用</h2>
+						<p class="fragment">分组和分支结构</p>
+						<p class="fragment">捕获分组和引用分组</p>
+						<p class="fragment">反向引用</p>
+						<p class="fragment">非捕获分组</p>
+					</section>
+
+					<section>
+						<h3>分组和分支结构</h3>
+						<p>
+							 我们知道/a+/匹配连续出现的“a”，而要匹配连续出现的“ab”时，需要使用/(ab)+/。 
+							 其中括号是提供分组功能，使量词+作用于“ab”这个整体
+						</p>
+
+						<pre><code>
+
+var regex = /(ab)+/g; 
+var string = "ababa abbb ababab"; 
+console.log( string.match(regex) ); // => ["abab", "ab", "ababab"]
+
+						</code></pre>
+
+						<pre><code>
+						
+var regex = /^I love (JavaScript|Regular Expression)$/; 
+console.log( regex.test("I love JavaScript") ); 
+console.log( regex.test("I love Regular Expression") ); 
+// => true 
+// => true 
+
+							</code></pre>
+					</section>
+
+					<section>
+						<h3>捕获分组和引用分组</h3>
+						<p>
+							一般捕获用于替换和修改文本； 比如php是世界上最牛逼的语言，把php换成“php和JavaScript”
+						</p>
+
+						<pre><code>
+"php是世界上最牛逼的语言".replace(/(php)/,"$1和js")
+
+其中replace中的，第二个参数里用$1指代相应的分组, 以括号的顺序进行编号，$1 - $9 ;
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>反向引用</h3>
+						<p>
+							 比如(ab|cd)123\1可以匹配“ab123ab”或者“cd123cd”，但是不能匹配“ab123cd”或“cd123ab”，这里有一对括号，也是第一对括号，所以编号为捕获组1，然后在正则中通过\1去引用了捕获组1的捕获的内容， 这里注意是反向引用会跟捕获组保持一致。
+						</p>
+					</section>
+
+					<section>
+						<h3>非捕获分组</h3>
+						<p>
+							 之前文中出现的分组，都会捕获它们匹配到的数据，以便后续引用，因此也称他们是捕获型分组。 如果只想要括号最原始的功能，但不会引用它，即，既不在API里引用，也不在正则里反向引用。此时可以使用非捕获分组(?:p)
+						</p>
+
+						<pre><code>
+
+var regex = /(?:ab)+/g; 
+var string = "ababa abbb ababab"; 
+console.log( string.match(regex) ); 
+// => ["abab", "ab", "ababab"]
+
+						</code></pre>
+					</section>
+				</section>
+
+				
+
+				<section>
+					<h1>THE END</h1>
+					<p>
+						- <a href="http://caibaojian.com/es6/regex.html">ES6 正则的扩展</a> <br>
+					</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
